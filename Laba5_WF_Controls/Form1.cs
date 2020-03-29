@@ -18,6 +18,9 @@ namespace Laba5_WF_Controls
             UpdateList();
             numOfWindows.Text = String.Empty;
             trackBar1.Scroll += trackBar1_Scroll;
+            UpdateStatusBar("Успешное открытие");
+            toolStripStatusLabel2.Text = DateTime.Now.ToString();
+
         }
 
         List <Room> rooms = new List<Room>();
@@ -62,6 +65,7 @@ namespace Laba5_WF_Controls
             AreaOfRoom.Clear();
             numOfWindows.Text = String.Empty;
             sideOfWindows.Text = "";
+            UpdateStatusBar("Добавили комнату");
         }
 
         private void addFlat_Click(object sender, EventArgs e)
@@ -193,6 +197,7 @@ namespace Laba5_WF_Controls
             flat.rooms = rooms;
             FlatModel.shared.flats.Add(flat);
             MessageBox.Show("Квартира добавлена.");
+            UpdateStatusBar("Добавили квартиру.");
             //-------------
             country.Clear();
             town.Clear();
@@ -231,9 +236,9 @@ namespace Laba5_WF_Controls
                 reternstr += flat.adress.town + " ";
                 reternstr += flat.adress.street + " ";
                 reternstr += flat.adress.subNumberOfBuilding + " ";
-                reternstr += flat.adress.subNumberOfBuilding + " ";
-                reternstr += flat.adress.numberOfFlat + " ";
-                reternstr += flat.size + " ";
+                reternstr += flat.adress.numberOfBuilding + " ";
+                reternstr += flat.adress.numberOfFlat + " | ";
+                reternstr += flat.size + "кв. м ";
                 reternstr += flat.numOfRooms + " ";
                 reternstr += Show(flat.options) + " ";
                 reternstr += flat.typeOfMaterial + " ";
@@ -318,6 +323,7 @@ namespace Laba5_WF_Controls
         private void save_Click(object sender, EventArgs e)
         {
             FlatModel.shared.Save();
+            UpdateStatusBar("Сохранили файл");
         }
 
         private void sideOfWindows_KeyPress(object sender, KeyPressEventArgs e)
@@ -347,6 +353,37 @@ namespace Laba5_WF_Controls
             {
                 MessageBox.Show("Пожалуйста, выберите из списка!");
             }
+        }
+
+        private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FlatModel.shared.Save();
+            UpdateStatusBar("Сохранили файл");
+
+        }
+
+        private void открытьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FlatModel.shared.Load();
+            UpdateStatusBar("Открыли файл");
+
+        }
+
+      
+        private void UpdateStatusBar(string str)
+        {
+            toolStripStatusLabel1.Text = str;
+            toolStripStatusLabel2.Text = DateTime.Now.ToString();
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Чиков Георгий Олегович. V 2.0");
         }
     }
 }
